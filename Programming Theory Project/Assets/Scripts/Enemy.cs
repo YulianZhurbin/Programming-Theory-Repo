@@ -11,11 +11,13 @@ public class Enemy : MonoBehaviour
     private GameObject player;
     int health = 50;
 
+    //ENCAPSULATION
     public virtual float Speed
     {
         get { return speed; }
     }
 
+    //ENCAPSULATION
     public int Health
     {
         get { return health; }
@@ -41,6 +43,7 @@ public class Enemy : MonoBehaviour
         attackedAim.Health -= damage;
     }
 
+    //ASTRACTION
     public void MoveToPlayer()
     {
         Vector3 movingDirection = (player.transform.position - transform.position).normalized;
@@ -48,6 +51,7 @@ public class Enemy : MonoBehaviour
         transform.LookAt(player.transform);
     }
 
+    //ASTRACTION
     public void CheckHealth()
     {
         if (Health <= 0)

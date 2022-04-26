@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     int health = 100;
     bool isAlive = true;
 
+    //ENCAPSULATION
     public int Health
     {
         get { return health; }
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //ASTRACTION
     private void CheckRange()
     {
         if (transform.position.x < -movingRange)
@@ -61,6 +63,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //ASTRACTION
     private void Move()
     {
         horizontalInput = Input.GetAxis("Horizontal");
@@ -80,6 +83,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //ASTRACTION
     void Shoot()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -90,6 +94,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //ASTRACTION
     void CheckHealth()
     {
         if (Health <= 0)

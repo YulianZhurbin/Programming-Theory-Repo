@@ -9,6 +9,7 @@ public class Storage : MonoBehaviour
     public string storedName = "Player1";
     RecordContainer recordContainer;
 
+    //ENCAPSULATION
     public RecordContainer RecordContainer
     {
         get { return recordContainer; }

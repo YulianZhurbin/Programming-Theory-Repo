@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//INHERITANCE
 public class Rooster : Enemy
 {
     const float SPEED_COEFFICIENT = 1.1f;
@@ -19,6 +20,7 @@ public class Rooster : Enemy
         Health *= HEALTH_INCREASE_COEFFICIENT;
     }
 
+    //POLYMORPHISM
     public override void Attack(PlayerController attackedAim)
     {
         attackedAim.Health -= damage * DAMAGE_COEFFICIENT;

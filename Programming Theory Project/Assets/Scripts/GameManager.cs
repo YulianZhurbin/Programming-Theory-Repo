@@ -37,12 +37,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //ENCAPSULATION
     public bool IsGameActive
     {
         set { isGameActive = value; }
         get { return IsGameActive; }
     }
 
+    //ENCAPSULATION
     public int Points
     {
         get { return points; }
@@ -61,36 +63,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        SpawnEnemy();
         ShowPlayersHealth();
         MoveGameOverText();
-    }
-
-    //Delete before building the game
-    void SpawnEnemy()
-    {
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            int animalIndex = 0;
-            Instantiate(enemyPrefabs[animalIndex], GiveRandomSpawnPosition(), enemyPrefabs[animalIndex].transform.rotation);
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
-        {
-            int animalIndex = 1;
-            Instantiate(enemyPrefabs[animalIndex], GiveRandomSpawnPosition(), enemyPrefabs[animalIndex].transform.rotation);
-        }        
-        
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            int animalIndex = 2;
-            Instantiate(enemyPrefabs[animalIndex], GiveRandomSpawnPosition(), enemyPrefabs[animalIndex].transform.rotation);
-        }
-
-        if(Input.GetKeyDown(KeyCode.F))
-        {
-            GameOver();
-        }
     }
 
     IEnumerator SpawnRandomEnemy()
@@ -122,6 +96,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //ASTRACTION
     void ShowPlayersHealth()
     {
         if(playerController.Health < 0)
@@ -139,6 +114,7 @@ public class GameManager : MonoBehaviour
         return spawnPos;
     }
 
+    //ASTRACTION
     void MoveGameOverText()
     {
         if (!isGameActive)
