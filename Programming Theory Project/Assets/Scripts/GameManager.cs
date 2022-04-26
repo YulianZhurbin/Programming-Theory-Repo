@@ -1,27 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     static GameManager sharedInstance;
     public GameObject[] enemyPrefabs;
+    [SerializeField] Button returnToMenuButton;
     Text countText;
     Text healthText;
     [SerializeField] Text gameOverText;
     PlayerController playerController;
     float[] posZArray;
-    [SerializeField] float spawnPosZ = 50;
+    [SerializeField] float spawnPosZ = 42;
     [SerializeField] float spawnPosY = 2;
     [SerializeField] float spawnRangeX = 30;
     [SerializeField] float spawnRate = 3;
     [SerializeField] float gameOverTextSpeed = 150;
     bool isGameActive = true;
-    float points = 0;
+    int points = 0;
     readonly float spawnRateChangeInterval = 30;
     readonly float spawnRateDecreaseCoefficient = 0.8f;
-    const float POINT_INCREASE_PER_SECOND = 1;
+    const int POINTS_INCREASE_INTERVAL = 1;
 
     private void Awake()
     {
@@ -41,10 +43,16 @@ public class GameManager : MonoBehaviour
         get { return IsGameActive; }
     }
 
+    public int Points
+    {
+        get { return points; }
+    }
+
     private void Start()
     {
         StartCoroutine(SpawnRandomEnemy());
         StartCoroutine(DecreaseSpawnRate());
+        StartCoroutine(CountPoints());
         posZArray = new float[] { -spawnPosZ, spawnPosZ };
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         countText = GameObject.Find("Count Text").GetComponent<Text>();
@@ -54,7 +62,6 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         SpawnEnemy();
-        CountPoints();
         ShowPlayersHealth();
         MoveGameOverText();
     }
@@ -96,10 +103,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void CountPoints()
+    IEnumerator CountPoints()
     {
-        points += POINT_INCREASE_PER_SECOND * Time.deltaTime;
-        countText.text = "Count: " + (int)points;
+        while(isGameActive)
+        {
+            yield return new WaitForSeconds(POINTS_INCREASE_INTERVAL);
+            points++;
+            countText.text = "Count: " + points;
+        }
     }
 
     IEnumerator DecreaseSpawnRate()
@@ -139,9 +150,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+    
     public void GameOver()
     {
         isGameActive = false;
         gameOverText.gameObject.SetActive(true);
+        returnToMenuButton.gameObject.SetActive(true);
+        Storage.instance.CheckRecord();
     }
 }

@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public float rotationSpeed = 180;
     float movingRange = 20;
     int health = 100;
+    bool isAlive = true;
 
     public int Health
     {
@@ -28,10 +29,13 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckRange();
-        Move();
-        Shoot();
-        CheckHealth();
+        if(isAlive)
+        {
+            CheckRange();
+            Move();
+            Shoot();
+            CheckHealth();
+        }
     }
 
     private void CheckRange()
@@ -88,22 +92,23 @@ public class PlayerController : MonoBehaviour
 
     void CheckHealth()
     {
-        if(Health <= 0)
+        if (Health <= 0)
         {
             GameManager.SharedInstance.GameOver();
+            isAlive = false;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy"))
         {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
             enemy.Attack(this);
             Destroy(enemy.gameObject);
         }
 
-        if(other.CompareTag("Egg"))
+        if (other.CompareTag("Egg"))
         {
             Egg egg = other.GetComponent<Egg>();
 

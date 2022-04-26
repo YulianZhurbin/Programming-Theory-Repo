@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] protected float speed = 1f;
-    [SerializeField] protected int damage = 10;
+    [SerializeField] protected float speed = 1.5f;
+    [SerializeField] protected int damage = 15;
     AudioSource audioSource;
     private Rigidbody enemyRb;
     private GameObject player;
@@ -52,6 +52,7 @@ public class Enemy : MonoBehaviour
     {
         if (Health <= 0)
         {
+            ParticleSystemManager.Instance.Explode(transform.position);
             Destroy(gameObject);
         }
     }
