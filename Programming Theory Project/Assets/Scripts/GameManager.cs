@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class GameManager : MonoBehaviour
 {
@@ -65,6 +68,7 @@ public class GameManager : MonoBehaviour
     {
         ShowPlayersHealth();
         MoveGameOverText();
+        CheckQuitRequest();
     }
 
     IEnumerator SpawnRandomEnemy()
@@ -137,5 +141,17 @@ public class GameManager : MonoBehaviour
         gameOverText.gameObject.SetActive(true);
         returnToMenuButton.gameObject.SetActive(true);
         Storage.instance.CheckRecord();
+    }
+
+    void CheckQuitRequest()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+#if UNITY_EDITOR
+            EditorApplication.ExitPlaymode();
+#else
+            Application.Quit();
+#endif
+        }
     }
 }

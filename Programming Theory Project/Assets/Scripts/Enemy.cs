@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] protected float speed = 1.5f;
+    //For Windows build set speed to 12.0f
+    [SerializeField] protected float speed = 2.7f;
     [SerializeField] protected int damage = 15;
     AudioSource audioSource;
     private Rigidbody enemyRb;

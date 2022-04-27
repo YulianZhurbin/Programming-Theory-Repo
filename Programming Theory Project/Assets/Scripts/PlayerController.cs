@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] GameObject projectilePrefab;
     AudioSource audioSource;
+    GameObject gun;
     float horizontalInput;
     float verticalInput;
     public float projectileSpeed = 50;
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         audioSource = gameObject.GetComponent<AudioSource>();
+        gun = GameObject.Find("Gun");
     }
 
     // Update is called once per frame
@@ -88,7 +90,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
+            GameObject projectile = Instantiate(projectilePrefab, gun.transform.position, transform.rotation);
             projectile.GetComponent<Rigidbody>().AddForce(projectileSpeed * transform.forward, ForceMode.Impulse);
             audioSource.Play();
         }
